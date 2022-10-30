@@ -31,7 +31,7 @@ Generate a Python package project::
 Then:
 
 * Create a repo and put it there.
-* Install the dev requirements into a virtualenv. ( ``pip install -r requirements_dev.txt`` ) & ( ``pip install -r requirements_dev_others.txt`` )
+* Install the dev requirements into a virtualenv. ( ``pip install -r requirements_dev.txt`` )
 * Release your package by pushing a new tag to master.
 * Add a ``requirements.txt`` file that specifies the packages you will need for
 

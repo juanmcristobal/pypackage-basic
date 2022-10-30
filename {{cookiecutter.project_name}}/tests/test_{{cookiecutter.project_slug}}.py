@@ -25,9 +25,7 @@ def response():
 def test_sample(response):
     """Sample pytest test function with the pytest fixture as an argument."""
     assert "Hello world!" == {{ cookiecutter.project_slug }}.say_hello()
-
-{%- if cookiecutter.command_line_interface|lower == 'click' %}
-
+{% if cookiecutter.command_line_interface|lower == 'click' %}
 
 def test_command_line_interface():
     """Test the CLI."""
@@ -38,5 +36,4 @@ def test_command_line_interface():
     help_result = runner.invoke(cli.main, ['--help'])
     assert help_result.exit_code == 0
     assert '--help  Show this message and exit.' in help_result.output
-
-{%- endif %}
+{% endif %}

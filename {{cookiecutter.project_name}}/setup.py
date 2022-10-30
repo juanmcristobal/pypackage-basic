@@ -10,14 +10,15 @@ with open('README.md') as readme_file:
 with open('HISTORY.md') as history_file:
     history = history_file.read()
 
-requirements = [{%- if cookiecutter.command_line_interface|lower == 'click' %}'Click>=7.0',{%- endif %} ]
+with open('requirements.txt') as f:
+    required = f.read().splitlines()
 
 setup_requirements = ['pytest-runner', ]
 
 test_requirements = ['pytest>=3', ]
 
 setup(
-    author="{{ cookiecutter.development_lead.replace('\"', '\\\"') }}",
+    author="{{ cookiecutter.full_name.replace('\"', '\\\"') }}",
     author_email='{{ cookiecutter.email }}',
     python_requires='>=3.5',
     classifiers=[
@@ -39,7 +40,7 @@ setup(
         ],
     },
     {%- endif %}
-    install_requires=requirements,
+    install_requires=required,
     long_description=readme + '\n\n' + history,
     include_package_data=True,
     keywords='{{ cookiecutter.project_slug }}',
@@ -48,7 +49,7 @@ setup(
     setup_requires=setup_requirements,
     test_suite='tests',
     tests_require=test_requirements,
-    url='http://{{ cookiecutter.project_name }}',
+    url='https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}',
     version='{{ cookiecutter.version }}',
     zip_safe=False,
 )

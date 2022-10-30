@@ -3,7 +3,7 @@
 
 ## Development Lead
 
-* {{ cookiecutter.development_lead }} <{{ cookiecutter.email }}>
+* {{ cookiecutter.full_name }} <{{ cookiecutter.email }}>
 
 ## Contributors
 

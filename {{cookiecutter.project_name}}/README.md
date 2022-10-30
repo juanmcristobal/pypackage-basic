@@ -64,7 +64,7 @@ Add additional notes about how to deploy this on a live system
 
 ## Authors
 
-* **{{ cookiecutter.development_lead }}** - *Development lead* - <{{ cookiecutter.email }}>
+* **{{ cookiecutter.full_name }}** - *Development lead* - <{{ cookiecutter.email }}>
 
 See also the list of [contributors](AUTHORS.md) who participated in this project.
 
