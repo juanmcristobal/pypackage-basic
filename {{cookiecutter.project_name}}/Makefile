@@ -55,8 +55,11 @@ lint: ## check style with flake8 and fix with Black
 test: ## run tests quickly with the default Python
 	pytest tests/
 
-test-all: ## run tests on every Python version with tox
-	tox
+test-all: ## run tests on every Python version with tox in docker
+	docker run -v .:/app {{ cookiecutter.project_slug }}-test:latest
+
+build-test-image: ## build aow-sdk-test docker image
+	docker build --tag {{ cookiecutter.project_slug }}-test:latest .
 
 coverage: ## check code coverage quickly with the default Python
 	coverage run --source {{ cookiecutter.project_slug }} -m pytest
