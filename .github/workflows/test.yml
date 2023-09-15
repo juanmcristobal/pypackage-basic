@@ -1,0 +1,34 @@
+﻿name: Test
+
+on:
+  push:
+    branches: [ '*' ]
+  pull_request:
+    branches: [ '*' ]
+
+jobs:
+  test:
+    runs-on: {{ '${{' }} matrix.os {{ '}}' }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: ["ubuntu-latest"]
+        python-version:
+          - "3.9"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: {{ '${{' }} matrix.python-version {{ '}}' }}
+          architecture: "x64"
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip setuptools wheel
+          pip install coverage pytest cookiecutter
+      - name: Create cookiecutter proyect
+        run: |
+          cookiecutter . --no-input 
+
+
