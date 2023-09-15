@@ -1,8 +1,8 @@
 {
   "full_name": "Juan Manuel Cristóbal Moreno",
   "email": "your_email@example.com",
-  "github_username": "juanmcristobal",  
-  "project_name": "Python Boilerplate",
+  "github_username": "juanmcristobal",
+  "project_name": "pypackage-basic",
   "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}",
   "project_short_description": "Python Boilerplate contains all the boilerplate you need to create a Python package.",
   "version": "0.1.0",

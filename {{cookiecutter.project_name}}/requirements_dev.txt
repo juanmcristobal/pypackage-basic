@@ -11,3 +11,4 @@ Click==8.0.0
 {% endif -%}
 pytest==7.4.2
 pytest-runner==6.0.0
+build
