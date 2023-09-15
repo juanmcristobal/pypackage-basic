@@ -42,6 +42,6 @@ jobs:
         run: |
           cd pypackage-basic
           coverage run --source pypackage_basic -m pytest -s tests
-          coverage report --show-missing --fail-under=100
+          coverage report --show-missing --fail-under=101
 
 
