@@ -33,7 +33,7 @@ jobs:
       - name: Install dependencies cookiecutter project
         run: |
           cd pypackage-basic
-          pip install -r requirements.txt
+          pip install -r requirements_dev.txt
       - name: Test pypackage-basic package
         run: |
           cd pypackage-basic
