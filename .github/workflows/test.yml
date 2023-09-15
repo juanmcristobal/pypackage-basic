@@ -38,5 +38,10 @@ jobs:
         run: |
           cd pypackage-basic
           pytest tests
+      - name: Coverage pypackage-basic package
+        run: |
+          cd pypackage-basic
+          coverage run --source pypackage_basic -m pytest -s tests
+          coverage report --show-missing --fail-under=100
 
 
