@@ -32,7 +32,6 @@ jobs:
           cookiecutter . --no-input
       - name: Install dependencies cookiecutter project
         run: |
-          cookiecutter . --no-input
           cd pypackage-basic
           pytest tests
 
