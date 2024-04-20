@@ -4,8 +4,6 @@ A Cookiecutter template to kick-start your Python packaging with modern tools an
 
 ![GitHub Actions](https://img.shields.io/github/actions/workflow/status/juanmcristobal/pypackage-basic/test.yml?branch=master)
 
-**Source:** [GitHub Repository](https://github.com/juanmcristobal/pypackage-basic.git)
-
 ## Features
 
 - **Testing Setup**: Uses `pytest` for testing.
@@ -20,16 +18,16 @@ A Cookiecutter template to kick-start your Python packaging with modern tools an
 
 ### Prerequisites
 
-Ensure you have Cookiecutter 1.4.0 or higher installed:
+Ensure you have Cookiecutter 1.4.0 or higher and cruft installed:
 ```bash
-pip install -U cookiecutter
+pip install -U cookiecutter cruft
 ```
 
 ### Generate Your Project
 
 Create your new Python package project with a single command:
 ```bash
-cookiecutter git@github.com:juanmcristobal/pypackage-basic.git
+cruft create git@github.com:juanmcristobal/pypackage-basic.git
 ```
 
 ### Next Steps
