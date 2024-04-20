@@ -1,14 +1,14 @@
-black==23.9.1
-isort==5.12.0
-pip==23.2.1
+black==24.4.0
+isort==5.13.2
+pip==24.0
 bump2version==1.0.1
-wheel==0.41.2
-flake8==6.1.0
-tox==4.11.3
-coverage==7.3.1
+wheel==0.43.0
+flake8==7.0.0
+tox==4.14.2
+coverage==7.4.4
 {% if cookiecutter.command_line_interface|lower == 'click' -%}
-Click==8.0.0
+Click==8.1.7
 {% endif -%}
-pytest==7.4.2
-pytest-runner==6.0.0
+pytest==8.1.1
+pytest-runner==6.0.1
 build

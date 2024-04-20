@@ -1,37 +1,47 @@
 # Cookiecutter PyPackage Basic
 
-Cookiecutter template for a Python package.
+A Cookiecutter template to kick-start your Python packaging with modern tools and practices.
 
-* GitHub repo:
+![GitHub Actions](https://img.shields.io/github/actions/workflow/status/juanmcristobal/pypackage-basic/test.yml?branch=master)
+
+**Source:** [GitHub Repository](https://github.com/juanmcristobal/pypackage-basic.git)
 
 ## Features
 
-* Testing setup with ``pytest``
-* Tox_ testing: Setup to easily test for Python 3.6, 3.7, 3.8, 3.9, 3.10 and 3.11.rc-2
-* Reformat code with `Black`
-* Sort imports alphabetically, and automatically separated into sections and by type with `isort`
-* bump2version_: Pre-configured version bumping with a single command
-* Command line interface using Click (optional)
-* Github actions
-
-_Cookiecutter: https://github.com/cookiecutter/cookiecutter
-
+- **Testing Setup**: Uses `pytest` for testing.
+- **Tox Testing**: Pre-configured environments for Python versions 3.6 through 3.11.rc-2.
+- **Code Formatting**: Utilizes `Black` for code formatting.
+- **Import Sorting**: Arranges imports using `isort`.
+- **Version Management**: Simplifies version bumps with `bump2version`.
+- **CLI Support**: Optionally creates a command line interface using `Click`.
+- **CI/CD**: Integrates GitHub Actions for Continuous Integration.
 
 ## Quickstart
 
-Install the latest Cookiecutter if you haven't installed it yet (this requires
-Cookiecutter 1.4.0 or higher)::
+### Prerequisites
 
-    pip install -U cookiecutter
+Ensure you have Cookiecutter 1.4.0 or higher installed:
+```bash
+pip install -U cookiecutter
+```
 
-Generate a Python package project::
+### Generate Your Project
 
-    cookiecutter git@github.com:juanmcristobal/pypackage-basic.git
+Create your new Python package project with a single command:
+```bash
+cookiecutter git@github.com:juanmcristobal/pypackage-basic.git
+```
 
-Then:
+### Next Steps
 
-* Create a repo and put it there.
-* Install the dev requirements into a virtualenv. ( ``pip install -r requirements_dev.txt`` )
-* Release your package by pushing a new tag to master.
-* Add a ``requirements.txt`` file that specifies the packages you will need for
-
+- **Initialize Your Git Repository**:
+  Create a new repository on GitHub and push your project files.
+- **Setup Development Environment**:
+  Install development dependencies within a virtual environment:
+  ```bash
+  pip install -r requirements_dev.txt
+  ```
+- **Prepare for Release**:
+  Release your package by tagging your commits and pushing them to the master branch.
+- **Manage Dependencies**:
+  Maintain a `requirements.txt` file specifying necessary production dependencies.
