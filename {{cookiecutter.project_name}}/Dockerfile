@@ -26,6 +26,7 @@ RUN apt-get install -y \
     python3.9 \
     python3.10 \
     python3.11 \
+    python3.12 \
     && apt-get clean
 
 # Install pip for each Python version
@@ -35,6 +36,7 @@ RUN apt-get install -y \
     python3.9-distutils \
     python3.10-distutils \
     python3.11-distutils \
+    python3.12-distutils \
     && apt-get clean
 
 # Set Python 3.9 as the default python version
