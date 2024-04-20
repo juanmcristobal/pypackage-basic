@@ -46,7 +46,7 @@ jobs:
           coverage report --show-missing --fail-under=100
           pip install coveralls
           coverage report --show-missing
-{%- if cookiecutter.private_repo|lower == 'y' %}
+{%- if cookiecutter.private_repo|lower == 'n' %}
           coveralls --service=github
 {%- endif %}
           
