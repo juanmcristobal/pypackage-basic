@@ -2,17 +2,16 @@
 
 A Cookiecutter template to kick-start your Python packaging with modern tools and practices.
 
-[![python](https://img.shields.io/badge/Python-3.8-3776AB.svg?style=flat&logo=python&logoColor=white)](https://www.python.org)
-[![python](https://img.shields.io/badge/Python-3.9-3776AB.svg?style=flat&logo=python&logoColor=white)](https://www.python.org)
 [![python](https://img.shields.io/badge/Python-3.10-3776AB.svg?style=flat&logo=python&logoColor=white)](https://www.python.org)
 [![python](https://img.shields.io/badge/Python-3.11-3776AB.svg?style=flat&logo=python&logoColor=white)](https://www.python.org)
 [![python](https://img.shields.io/badge/Python-3.12-3776AB.svg?style=flat&logo=python&logoColor=white)](https://www.python.org)
+[![python](https://img.shields.io/badge/Python-3.13-3776AB.svg?style=flat&logo=python&logoColor=white)](https://www.python.org)
 ![GitHub Actions](https://img.shields.io/github/actions/workflow/status/juanmcristobal/pypackage-basic/test.yml?branch=master)
 
 ## Features
 
 - **Testing Setup**: Uses `pytest` for testing.
-- **Tox Testing**: Pre-configured environments for Python versions 3.6 through 3.11.rc-2.
+- **Tox Testing**: Pre-configured environments for Python versions 3.10 through 3.13.
 - **Code Formatting**: Utilizes `Black` for code formatting.
 - **Import Sorting**: Arranges imports using `isort`.
 - **Version Management**: Simplifies version bumps with `bump2version`.

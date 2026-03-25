@@ -19,32 +19,20 @@ RUN add-apt-repository ppa:deadsnakes/ppa
 # Update the package list again to include the new repository
 RUN apt-get update
 
-# Install Python versions 3.7 to 3.11
+# Install Python versions 3.10 to 3.13
 RUN apt-get install -y \
-    python3.7 \
-    python3.8 \
-    python3.9 \
     python3.10 \
     python3.11 \
     python3.12 \
+    python3.13 \
     && apt-get clean
 
-# Install pip for each Python version
-RUN apt-get install -y \
-    python3.7-distutils \
-    python3.8-distutils \
-    python3.9-distutils \
-    python3.10-distutils \
-    python3.11-distutils \
-    python3.12-distutils \
-    && apt-get clean
+# Set Python 3.10 as the default python version
+RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.10 1
 
-# Set Python 3.9 as the default python version
-RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.9 1
-
-# Install pip for Python 3.9
+# Install pip for Python 3.10
 RUN curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
-RUN python3.9 get-pip.py
+RUN python3.10 get-pip.py
 
 # Install tox for Python 3
 RUN python3 -m pip install tox
