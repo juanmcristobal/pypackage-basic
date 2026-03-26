@@ -1,5 +1,5 @@
-# Use the official Ubuntu 20.04 as the base image
-FROM ubuntu:20.04
+# Use Ubuntu 22.04 to keep Python package availability current
+FROM ubuntu:22.04
 
 # Set environment variables
 ENV DEBIAN_FRONTEND=noninteractive
@@ -14,12 +14,12 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean
 
 # Add the deadsnakes PPA for multiple Python versions
-RUN add-apt-repository ppa:deadsnakes/ppa
+RUN add-apt-repository -y ppa:deadsnakes/ppa
 
 # Update the package list again to include the new repository
 RUN apt-get update
 
-# Install Python versions 3.10 to 3.13
+# Install Python versions used by tox in this project template
 RUN apt-get install -y \
     python3.10 \
     python3.11 \
