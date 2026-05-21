@@ -2,77 +2,55 @@
 
 {{ cookiecutter.project_short_description }}
 
-## Getting Started
+{% if cookiecutter.package_type|lower == 'rust' %}
+This project was generated as a Rust-backed Python package.
+{% else %}
+This project was generated as a pure Python package.
+{% endif %}
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+## Quick Start
 
+Install the project in editable mode:
 
-### Prerequisites
-
-What things you need to install the software and how to install them
-
-```
-Give examples
-```
-
-### Installing
-
-A step by step series of examples that tell you how to get a development env running
-
-Say what the step will be
-
-```
-Give the example
+```bash
+pip install -e ".[dev]"
 ```
 
-And repeat
+Run the standard checks:
 
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
-
-### Running the tests
-
-```
-make tox
-```
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-### Coding style
-
-Please respect the established Python coding style, PEP8 says that consistency with your project is more important than consistency with the style guide.
-
-In this case we will always use Black as code reformatter. execute this command for refactor your code and verify with flake8
-
-```
+```bash
 make lint
+make test
+make coverage
+make dist
 ```
 
-## Deployment
+## Project Layout
 
-Add additional notes about how to deploy this on a live system
+This template includes:
 
+- Python 3.10 to 3.13 support
+- `pyproject.toml` for build and tool configuration
+- `setup.py` compatibility for setuptools-based installs
+- optional Click CLI scaffolding
+- `dev` extra for editable installs with development tools
+- `pytest`, `black`, `isort`, `flake8`, `tox`, `coverage`, and `build`
+- GitHub Actions CI for tests and release automation
 
-## Authors
+{% if cookiecutter.package_type|lower == 'rust' %}
+## Rust Package Notes
 
-* **{{ cookiecutter.full_name }}** - *Development lead* - <{{ cookiecutter.email }}>
+The release workflow uses `maturin` and builds wheels for multiple platforms before publishing to PyPI.
+{% else %}
+## Python Package Notes
 
-See also the list of [contributors](AUTHORS.md) who participated in this project.
+The release workflow builds source and wheel distributions with `python -m build` before publishing to PyPI.
+{% endif %}
 
+## Notes
 
-## Credits
-
-This package was created with Cookiecutter_ and the `pypackage`_ project template (v{{ cookiecutter.__pypackage_version }}). 
-
-*  _Cookiecutter: https://github.com/audreyr/cookiecutter
-*  _`pypackage-basic`: pypackage-basic
-
+- `setup.py` and `setup.cfg` are kept for compatibility with the older workflow.
+- `pyproject.toml` is the preferred place for formatter and test configuration in new projects.
+- `pip install -e ".[dev]"` is the supported development install path.
+- The old `requirements_dev.txt` flow has been removed.
+- If CLI generation is disabled, `hooks/post_gen_project.py` removes the generated `cli.py`.

@@ -26,35 +26,19 @@ jobs:
         with:
           python-version: {{ '${{' }} matrix.python-version {{ '}}' }}
           architecture: "x64"
+          cache: pip
+          cache-dependency-path: |
+            requirements.txt
+            setup.py
+            pyproject.toml
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip setuptools wheel
-          pip install coverage pytest
-          pip install -e .
+          pip install -e .[dev]
       - name: PyTest
         run: |
           coverage run --source {{cookiecutter.project_slug}} -m pytest
           pytest tests/
       - name: Coverage
-        env:
-          GITHUB_TOKEN: {{ '${{' }} secrets.github_token {{ '}}' }}
-          COVERALLS_FLAG_NAME: {{ '${{' }} matrix.python-version {{ '}}' }}
-          COVERALLS_PARALLEL: true
-        if: (! contains(matrix.python-version, 'pypy'))
         run: |
           coverage report --show-missing --fail-under=100
-          pip install coveralls
-          coverage report --show-missing
-{%- if cookiecutter.private_repo|lower == 'n' %}
-          coveralls --service=github
-{%- endif %}
-          
-  finish:
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-      - name: Coveralls Finished
-        uses: coverallsapp/github-action@master
-        with:
-          github-token: {{ '${{' }} secrets.github_token {{ '}}' }}
-          parallel-finished: true

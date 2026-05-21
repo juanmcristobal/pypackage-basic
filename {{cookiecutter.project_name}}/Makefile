@@ -48,12 +48,12 @@ clean-test: ## remove test and coverage artifacts
 	rm -fr .pytest_cache
 
 lint: ## check style with flake8 and fix with Black
-	black {{ cookiecutter.project_slug }} tests
-	isort {{ cookiecutter.project_slug }} tests
-	flake8 {{ cookiecutter.project_slug }} tests
+	python -m black {{ cookiecutter.project_slug }} tests
+	python -m isort {{ cookiecutter.project_slug }} tests
+	python -m flake8 {{ cookiecutter.project_slug }} tests
 
 test: ## run tests quickly with the default Python
-	pytest tests/
+	python -m pytest tests/
 
 test-all: ## run tests on every Python version with tox in docker
 	docker run -v .:/app {{ cookiecutter.project_slug }}-test:latest
@@ -62,17 +62,17 @@ build-test-image: ## build aow-sdk-test docker image
 	docker build --tag {{ cookiecutter.project_slug }}-test:latest .
 
 coverage: ## check code coverage quickly with the default Python
-	coverage run --source {{ cookiecutter.project_slug }} -m pytest
-	coverage report -m
-	coverage html
+	python -m coverage run --source {{ cookiecutter.project_slug }} -m pytest
+	python -m coverage report -m
+	python -m coverage html
 	$(BROWSER) htmlcov/index.html
 
 release: dist ## package and upload a release
-	twine upload dist/*
+	python -m twine upload dist/*
 
 dist: clean ## builds source and wheel package
 	python -m build .
 	ls -l dist
 
 install: clean ## install the package to the active Python's site-packages
-	python setup.py install
+	python -m pip install -e .
