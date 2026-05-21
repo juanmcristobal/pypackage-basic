@@ -12,3 +12,6 @@ if __name__ == '__main__':
     if 'no' in '{{ cookiecutter.command_line_interface|lower }}':
         cli_file = os.path.join('{{ cookiecutter.project_slug }}', 'cli.py')
         remove_file(cli_file)
+    if '{{ cookiecutter.private_repo|lower }}' == 'y':
+        release_file = os.path.join('.github', 'workflows', 'release.yml')
+        remove_file(release_file)

@@ -1,0 +1,163 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+jobs:
+{% if cookiecutter.package_type|lower == 'rust' %}
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: linux-x86_64
+            os: ubuntu-latest
+            target: x86_64-unknown-linux-gnu
+            manylinux: "2_28"
+          - name: linux-aarch64
+            os: ubuntu-latest
+            target: aarch64-unknown-linux-gnu
+            manylinux: "2_28"
+          - name: linux-armv7
+            os: ubuntu-latest
+            target: armv7-unknown-linux-gnueabihf
+            manylinux: "2_17"
+          - name: windows-x86_64
+            os: windows-latest
+            target: x86_64-pc-windows-msvc
+          - name: macos-arm64
+            os: macos-latest
+            target: aarch64-apple-darwin
+          - name: macos-x86_64
+            os: macos-15-intel
+            target: x86_64-apple-darwin
+    runs-on: {{ '${{' }} matrix.os {{ '}}' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build wheels
+        uses: PyO3/maturin-action@v1
+        with:
+          command: build
+          target: {{ '${{' }} matrix.target {{ '}}' }}
+          manylinux: {{ '${{' }} matrix.manylinux || 'off' {{ '}}' }}
+          args: --release --out dist --compatibility pypi
+
+      - name: Upload wheels
+        uses: actions/upload-artifact@v4
+        with:
+          name: wheels-{{ '${{' }} matrix.name {{ '}}' }}
+          path: dist
+
+  sdist:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build sdist
+        uses: PyO3/maturin-action@v1
+        with:
+          command: sdist
+          args: --out dist
+
+      - name: Upload sdist
+        uses: actions/upload-artifact@v4
+        with:
+          name: sdist
+          path: dist
+{% else %}
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          architecture: "x64"
+
+      - name: Install build tooling
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install build twine
+
+      - name: Build distributions
+        run: python -m build
+
+      - name: Check distributions
+        run: python -m twine check dist/*
+
+      - name: Upload distributions
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist
+{% endif %}
+
+  pypi-publish:
+    name: Publish to PyPI
+{% if cookiecutter.package_type|lower == 'rust' %}
+    needs: [build, sdist]
+{% else %}
+    needs: build
+{% endif %}
+    runs-on: ubuntu-latest
+    environment: pypi
+    permissions:
+      id-token: write
+    steps:
+{% if cookiecutter.package_type|lower == 'rust' %}
+      - name: Download wheel artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: wheels-*
+          path: dist
+          merge-multiple: true
+
+      - name: Download sdist artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: sdist
+          path: dist
+{% else %}
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist
+{% endif %}
+
+      - name: Verify tag matches package version
+        env:
+          GIT_TAG: {{ '${{' }} github.ref_name {{ '}}' }}
+        run: |
+          python - <<'PY'
+          import os
+          import pathlib
+          import re
+          import sys
+
+          setup_py = pathlib.Path("setup.py").read_text()
+          match = re.search(r"version='([^']+)'", setup_py)
+          if not match:
+              sys.exit("Could not find package version in setup.py")
+
+          package_version = match.group(1)
+          tag_version = os.environ["GIT_TAG"].removeprefix("v")
+
+          if tag_version != package_version:
+              sys.exit(
+                  f"Tag version {tag_version!r} does not match package version "
+                  f"{package_version!r}"
+              )
+
+          print(f"Publishing version {package_version}")
+          PY
+
+      - name: Publish package distributions to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1

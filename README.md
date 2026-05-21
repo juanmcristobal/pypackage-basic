@@ -1,49 +1,46 @@
 # Cookiecutter PyPackage Basic
 
-A Cookiecutter template to kick-start your Python packaging with modern tools and practices.
+A Cookiecutter template for generating small Python packages with a modern baseline.
 
-[![python](https://img.shields.io/badge/Python-3.10-3776AB.svg?style=flat&logo=python&logoColor=white)](https://www.python.org)
-[![python](https://img.shields.io/badge/Python-3.11-3776AB.svg?style=flat&logo=python&logoColor=white)](https://www.python.org)
-[![python](https://img.shields.io/badge/Python-3.12-3776AB.svg?style=flat&logo=python&logoColor=white)](https://www.python.org)
-[![python](https://img.shields.io/badge/Python-3.13-3776AB.svg?style=flat&logo=python&logoColor=white)](https://www.python.org)
-![GitHub Actions](https://img.shields.io/github/actions/workflow/status/juanmcristobal/pypackage-basic/test.yml?branch=master)
+## What it generates
 
-## Features
+- Python 3.10 to 3.13 support
+- `pyproject.toml` for build and tool config
+- `setup.py` and `setup.cfg` for compatibility with older tooling
+- optional Click CLI scaffolding
+- optional package type selection, with Python and Rust variants
+- `dev` extra for editable installs with development tools
+- `pytest`, `black`, `isort`, `flake8`, `tox`, `coverage`, and `build`
+- GitHub Actions workflows for the template and generated projects
 
-- **Testing Setup**: Uses `pytest` for testing.
-- **Tox Testing**: Pre-configured environments for Python versions 3.10 through 3.13.
-- **Code Formatting**: Utilizes `Black` for code formatting.
-- **Import Sorting**: Arranges imports using `isort`.
-- **Version Management**: Simplifies version bumps with `bump2version`.
-- **CLI Support**: Optionally creates a command line interface using `Click`.
-- **CI/CD**: Integrates GitHub Actions for Continuous Integration.
+## Usage
 
-## Quickstart
+Install the template tooling:
 
-### Prerequisites
-
-Ensure you have Cookiecutter 1.4.0 or higher and cruft installed:
 ```bash
 pip install -U cookiecutter cruft
 ```
 
-### Generate Your Project
+Generate a new project:
 
-Create your new Python package project with a single command:
 ```bash
 cruft create git@github.com:juanmcristobal/pypackage-basic.git
 ```
 
-### Next Steps
+Then in the generated project:
 
-- **Initialize Your Git Repository**:
-  Create a new repository on GitHub and push your project files.
-- **Setup Development Environment**:
-  Install development dependencies within a virtual environment:
-  ```bash
-  pip install -r requirements_dev.txt
-  ```
-- **Prepare for Release**:
-  Release your package by tagging your commits and pushing them to the master branch.
-- **Manage Dependencies**:
-  Maintain a `requirements.txt` file specifying necessary production dependencies.
+```bash
+pip install -e ".[dev]"
+make lint
+make test
+make coverage
+make dist
+```
+
+## Changelog
+
+- `package_type` is now the main variant question.
+- `python` keeps the release workflow on `python -m build` plus `twine`.
+- `rust` switches the release workflow to a `maturin` matrix build with shared PyPI publish.
+- `requirements_dev.txt` has been removed in favor of the `dev` extra.
+- `setup.py` and `setup.cfg` remain for compatibility, but `pyproject.toml` and `pip install -e ".[dev]"` are the preferred path.
